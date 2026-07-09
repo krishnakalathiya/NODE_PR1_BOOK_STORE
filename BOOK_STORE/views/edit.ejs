@@ -1,0 +1,22 @@
+<%- include('partials/header') %>
+
+<h1>Edit Book: <%= book.title %></h1>
+
+<form action="/books/update/<%= book.id %>" method="POST">
+    <label>Book Title:</label>
+    <input type="text" name="title" value="<%= book.title %>" required>
+
+    <label>Author(s):</label>
+    <input type="text" name="authors" value="<%= book.authors %>" required>
+
+    <label>Image URL:</label>
+    <input type="text" name="thumbnail" value="<%= book.thumbnail %>">
+
+    <label>Description:</label>
+    <textarea name="description" rows="6" required><%= book.description %></textarea>
+
+    <button type="submit" class="btn btn-success">Update Book</button>
+    <a href="/books/<%= book.id %>" class="btn btn-danger">Cancel</a>
+</form>
+
+<%- include('partials/footer') %>

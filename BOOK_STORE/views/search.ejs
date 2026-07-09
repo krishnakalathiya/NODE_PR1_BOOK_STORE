@@ -1,0 +1,37 @@
+<%- include('partials/header') %>
+
+<h1>Search & Add from Online API</h1>
+<form action="/search-online" method="GET" class="search-box">
+    <input type="text" name="q" placeholder="Enter book name or author..." value="<%= query %>" required>
+    <button type="submit" class="btn btn-success" style="margin: 10px 0;">Search</button>
+</form>
+
+<% if (query) { %>
+    <h2>Search Results for "<%= query %>"</h2>
+    
+    <% if (results && results.length > 0) { %>
+        <div class="book-grid">
+            <% results.forEach(book => { %>
+                <div class="book-card">
+                    <img src="<%= book.thumbnail %>" alt="<%= book.title %>">
+                    <h3><%= book.title %></h3>
+                    <p><strong>By:</strong> <%= book.authors %></p>
+                    <p style="font-size: 12px; color: #666; text-align: left;"><%= book.description %></p>
+                    
+                    <!-- આ ફોર્મ બુકને લોકલ કલેક્શનમાં એડ કરશે -->
+                    <form action="/books/add" method="POST" style="margin-top: 15px;">
+                        <input type="hidden" name="title" value="<%= book.title %>">
+                        <input type="hidden" name="authors" value="<%= book.authors %>">
+                        <input type="hidden" name="description" value="<%= book.description %>">
+                        <input type="hidden" name="thumbnail" value="<%= book.thumbnail %>">
+                        <button type="submit" class="btn btn-success" style="width: 100%;">➕ Add to Collection</button>
+                    </form>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <p style="color: #e74c3c; margin-top: 20px;">No books found online for your search. Please try another name!</p>
+    <% } %>
+<% } %>
+
+<%- include('partials/footer') %>
