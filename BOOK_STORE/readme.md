@@ -34,13 +34,3 @@ book-project/
 └── server.js            # Main entry point and server startup file
 
 ---
-
-## 🔮 Future Improvements
-Here are some features that can be added next to level up this project from a beginner to an intermediate application:
-
-* **User Authentication:** Add Sign Up and Login functionality using `bcrypt` and `express-session` so users can manage their own personal book lists.
-* **Search & Filter:** Implement a search bar at the top of the table to instantly filter books by title or author name.
-* **Pagination:** If there are hundreds of books, break the list into pages (e.g., 10 books per page) to optimize loading speed.
-* **Image Uploads:** Allow users to upload a book cover image using the `multer` middleware and display it on the view card.
-* **RESTful API Conversion:** Convert the project into a backend API that sends JSON data instead of rendering EJS templates, making it ready to connect with React.js.
-* **Input Validation:** Add robust server-side validation using `joi` or `express-validator` to ensure users don't submit negative prices or empty names.
