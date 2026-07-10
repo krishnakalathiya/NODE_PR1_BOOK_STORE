@@ -1,3 +1,4 @@
+# Explanation Video Link : https://drive.google.com/file/d/17LGg5_sHI3dLS-I0fUe3iocTmdk0NnA2/view?usp=sharing
 # 📚 Book Management Project 
 
 This is a simple and beginner-friendly **Book Management** web application built using **Node.js, Express, MongoDB (Mongoose), and EJS**. The project uses **MongoDB Atlas (Cloud)** as its database. To prevent connection or network resolution errors, Google DNS is configured directly within the code.
@@ -33,4 +34,3 @@ book-project/
 ├── package.json         # Project dependencies and details
 └── server.js            # Main entry point and server startup file
 
----
