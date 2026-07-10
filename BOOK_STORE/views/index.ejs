@@ -1,20 +1,98 @@
-<%- include('partials/header') %>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Book Space</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f8fafc; color: #334155; padding: 40px 20px; }
+        .container { max-width: 1100px; margin: 0 auto; display: flex; gap: 30px; flex-wrap: wrap; }
+        
+        /* Left Column: Form */
+        .form-section { flex: 1; min-width: 320px; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; height: fit-content; }
+        .form-section h2 { margin-bottom: 20px; font-size: 22px; color: #0f172a; font-weight: 600; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 500; color: #64748b; }
+        input { width: 100%; padding: 10px 14px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; transition: all 0.2s; }
+        input:focus { border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.15); }
+        .btn-submit { width: 100%; background: #0ea5e9; color: white; border: none; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: background 0.2s; }
+        .btn-submit:hover { background: #0284c7; }
 
-<h1>My Personal Book Collection</h1>
+        /* Right Column: Table List */
+        .list-section { flex: 2; min-width: 500px; background: #ffffff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
+        .list-section h2 { margin-bottom: 20px; font-size: 22px; color: #0f172a; font-weight: 600; }
+        
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { padding: 14px; border-bottom: 2px solid #edf2f7; color: #64748b; font-size: 14px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        td { padding: 14px; border-bottom: 1px solid #f1f5f9; color: #334155; font-size: 15px; }
+        tr:hover { background-color: #f8fafc; }
+        
+        /* Modern Minimal Buttons */
+        .actions { display: flex; gap: 8px; }
+        .action-btn { padding: 6px 12px; text-decoration: none; font-size: 13px; font-weight: 500; border-radius: 6px; transition: all 0.2s; }
+        .btn-v { background: #f0fdf4; color: #166534; border: 1px solid #bbf7d0; }
+        .btn-v:hover { background: #dcfce7; }
+        .btn-e { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+        .btn-e:hover { background: #fef3c7; }
+        .btn-d { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; }
+        .btn-d:hover { background: #fee2e2; }
+    </style>
+</head>
+<body>
 
-<% if (books.length === 0) { %>
-    <p>Your collection is empty. Click on "Search Online & Add" to bring some books here!</p>
-<% } else { %>
-    <div class="book-grid">
-        <% books.forEach(book => { %>
-            <div class="book-card">
-                <img src="<%= book.thumbnail %>" alt="<%= book.title %>">
-                <h3><%= book.title %></h3>
-                <p>By: <%= book.authors %></p>
-                <a href="/books/<%= book.id %>" class="btn btn-primary">View Details</a>
-            </div>
-        <% }) %>
+    <div class="container">
+        <!-- Left Side: Form -->
+        <div class="form-section">
+            <h2>Add New Book</h2>
+            <form action="/add" method="POST">
+                <div class="form-group">
+                    <label>Book Title</label>
+                    <input type="text" name="name" placeholder="e.g. The Alchemist" required>
+                </div>
+                <div class="form-group">
+                    <label>Author</label>
+                    <input type="text" name="author" placeholder="e.g. Paulo Coelho" required>
+                </div>
+                <div class="form-group">
+                    <label>Price (INR)</label>
+                    <input type="number" name="price" placeholder="e.g. 299" required>
+                </div>
+                <button type="submit" class="btn-submit">Save to Library</button>
+            </form>
+        </div>
+
+        <!-- Right Side: Table -->
+        <div class="list-section">
+            <h2>Library Collection</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% books.forEach(book => { %>
+                        <tr>
+                            <td style="font-weight: 500; color: #0f172a;"><%= book.name %></td>
+                            <td><%= book.author %></td>
+                            <td style="font-weight: 600; color: #0ea5e9;">₹<%= book.price %></td>
+                            <td>
+                                <div class="actions">
+                                    <a href="/view/<%= book._id %>" class="action-btn btn-v">View</a>
+                                    <a href="/edit/<%= book._id %>" class="action-btn btn-e">Edit</a>
+                                    <a href="/delete/<%= book._id %>" class="action-btn btn-d" onclick="return confirm('Remove this book?')">Delete</a>
+                                </div>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
     </div>
-<% } %>
 
-<%- include('partials/footer') %>
+</body>
+</html>
